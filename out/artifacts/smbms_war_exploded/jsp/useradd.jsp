@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" import="java.util.*"
+         pageEncoding="UTF-8"%>
+
 <%@include file="/jsp/common/head.jsp"%>
 
 <div class="right">
@@ -12,7 +13,7 @@
 				<input type="hidden" name="method" value="add">
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <div>
-                    <label for="userCode">用户编码：</label>
+                    <label for="userCode">用户名：</label>
                     <input type="text" name="userCode" id="userCode" value=""> 
 					<!-- 放置提示信息 -->
 					<font color="red"></font>
@@ -60,6 +61,7 @@
 					<select name="userRole" id="userRole"></select>
 	        		<font color="red"></font>
                 </div>
+
                 <div class="providerAddBtn">
                     <input type="button" name="add" id="add" value="保存" >
 					<input type="button" id="back" name="back" value="返回" >
@@ -69,4 +71,4 @@
 </div>
 </section>
 <%@include file="/jsp/common/foot.jsp" %>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/useradd.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/useradd.js" charset="UTF-8"></script>
