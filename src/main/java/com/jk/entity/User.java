@@ -25,10 +25,31 @@ public class User {
     private Date modifyDate;//更新时间
     private Integer age;
 
+    public User() {
+    }
+
+    public User(Integer id, String userCode, String userName, String userPassword, Integer gender, Date birthday, String phone, String address, Integer userRole, Integer createBy, Date creationDate, Integer modifyBy, Date modifyDate, Integer age, String userRoleName) {
+        this.id = id;
+        this.userCode = userCode;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.phone = phone;
+        this.address = address;
+        this.userRole = userRole;
+        this.createBy = createBy;
+        this.creationDate = creationDate;
+        this.modifyBy = modifyBy;
+        this.modifyDate = modifyDate;
+        this.age = age;
+        this.userRoleName = userRoleName;
+    }
+
     public Integer getAge() {
         Date date = new Date();
-        Integer age = date.getYear() - birthday.getYear();
-        return age;
+        this.age = date.getYear() - birthday.getYear();
+        return this.age;
     }
     public String getUserRoleName() {
         return userRoleName;

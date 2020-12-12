@@ -9,6 +9,7 @@
         </div>
         <div class="search">
         	<form method="get" action="${pageContext.request.contextPath }/jsp/provider.do">
+				<input type="hidden" name="pageIndex" value="1"/>
 				<input name="method" value="query" type="hidden">
 				<span>供应商编码：</span>
 				<input name="queryProCode" type="text" value="${queryProCode }">
@@ -61,7 +62,12 @@
 				</tr>
 			</c:forEach>
         </table>
-
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
     </div>
 </section>
 

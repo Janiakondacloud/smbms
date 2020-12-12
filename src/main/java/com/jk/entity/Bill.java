@@ -13,7 +13,7 @@ public class Bill {
     private String billCode;//账单编码
     private String productName;//商品名称
     private String productDesc;//商品描述
-    private String productUtil;//商品单位
+    private String productUnit;//商品单位
     private BigDecimal productCount;//商品数量
     private BigDecimal totalPrice;//商品数量
     private Integer isPayment;//是否支付
@@ -56,12 +56,12 @@ public class Bill {
         this.productDesc = productDesc;
     }
 
-    public String getProductUtil() {
-        return productUtil;
+    public String getProductUnit() {
+        return productUnit;
     }
 
-    public void setProductUtil(String productUtil) {
-        this.productUtil = productUtil;
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
     }
 
     public BigDecimal getProductCount() {

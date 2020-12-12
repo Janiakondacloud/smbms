@@ -1,4 +1,4 @@
-var billCode = null;
+ var billCode = null;
 var productName = null;
 var productUnit = null;
 var productCount = null;
@@ -41,6 +41,7 @@ $(function(){
 		url:path+"/jsp/bill.do",//请求的url
 		data:{method:"getproviderlist"},//请求参数
 		dataType:"json",//ajax接口（请求url）返回的数据类型
+		contentType: "application/x-www-form-urlencoded; charset=utf-8",
 		success:function(data){//data：返回数据（json对象）
 			if(data != null){
 				$("select").html("");//通过标签选择器，得到select标签，适用于页面里只有一个select
@@ -62,17 +63,30 @@ $(function(){
 	 * 失焦\获焦
 	 * jquery的方法传递
 	 */
-	billCode.on("blur",function(){
-		if(billCode.val() != null && billCode.val() != ""){
-			validateTip(billCode.next(),{"color":"green"},imgYes,true);
-		}else{
-			validateTip(billCode.next(),{"color":"red"},imgNo+" 编码不能为空，请重新输入",false);
-		}
-	}).on("focus",function(){
+	billCode.bind("blur",function(){
+		//ajax后台验证--billCode是否已存在
+		//bill.do?method=billexist&billcode=**
+		$.ajax({
+			type:"GET",//请求类型
+			url:path+"/jsp/bill.do",//请求的url
+			data:{method:"billexist",billCode:billCode.val()},//请求参数
+			dataType:"json",//ajax接口（请求url）返回的数据类型
+			success:function(data){//data：返回数据（json对象）
+				if(data.billCode == "exist"){//账号已存在，错误提示
+					validateTip(billCode.next(),{"color":"red"},imgNo+ " 该订单号已存在",false);
+				}else{//账号可用，正确提示
+					validateTip(billCode.next(),{"color":"green"},imgYes+" 该订单号可以使用",true);
+				}
+			},
+			error:function(data){//当访问时候，404，500 等非200的错误状态码
+				validateTip(billCode.next(),{"color":"red"},imgNo+" 您访问的页面不存在",false);
+			}
+		});
+	}).bind("focus",function(){
 		//显示友情提示
-		validateTip(billCode.next(),{"color":"#666666"},"* 请输入订单编码",false);
+		validateTip(billCode.next(),{"color":"#666666"},"* 每个订单应该有不同的订单号，请你输入",false);
 	}).focus();
-	
+
 	productName.on("focus",function(){
 		validateTip(productName.next(),{"color":"#666666"},"* 请输入商品名称",false);
 	}).on("blur",function(){

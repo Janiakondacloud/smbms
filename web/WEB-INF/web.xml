@@ -46,6 +46,22 @@
         <url-pattern>/jsp/user.do</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ProviderServlet</servlet-name>
+        <servlet-class>com.jk.servlet.provider.ProviderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProviderServlet</servlet-name>
+        <url-pattern>/jsp/provider.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>BillServlet</servlet-name>
+        <servlet-class>com.jk.servlet.bill.BillServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BillServlet</servlet-name>
+        <url-pattern>/jsp/bill.do</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>logoutServlet</servlet-name>
         <servlet-class>com.jk.servlet.user.LogoutServlet</servlet-class>
     </servlet>

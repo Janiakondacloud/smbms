@@ -23,17 +23,34 @@ $(function(){
 	 * 失焦\获焦
 	 * jquery的方法传递
 	 */
-	proCode.on("blur",function(){
-		if(proCode.val() != null && proCode.val() != ""){
-			validateTip(proCode.next(),{"color":"green"},imgYes,true);
-		}else{
-			validateTip(proCode.next(),{"color":"red"},imgNo+" 编码不能为空，请重新输入",false);
-		}
-	}).on("focus",function(){
+	/*
+	 * 验证
+	 * 失焦\获焦
+	 * jquery的方法传递
+	 */
+	proCode.bind("blur",function(){
+		//ajax后台验证--proCode是否已存在
+		//provider.do?method=providerexist&proCode=**
+		$.ajax({
+			type:"GET",//请求类型
+			url:path+"/jsp/provider.do",//请求的url
+			data:{method:"providerexist",proCode:proCode.val()},//请求参数
+			dataType:"json",//ajax接口（请求url）返回的数据类型
+			success:function(data){//data：返回数据（json对象）
+				if(data.proCode == "exist"){//账号已存在，错误提示
+					validateTip(proCode.next(),{"color":"red"},imgNo+ " 该供应商编号已存在",false);
+				}else{
+					validateTip(proCode.next(),{"color":"green"},imgYes+" 该供应商编号可以使用",true);
+				}
+			},
+			error:function(data){//当访问时候，404，500 等非200的错误状态码
+				validateTip(proCode.next(),{"color":"red"},imgNo+" 您访问的页面不存在",false);
+			}
+		});
+	}).bind("focus",function(){
 		//显示友情提示
-		validateTip(proCode.next(),{"color":"#666666"},"* 请输入供应商编码",false);
+		validateTip(proCode.next(),{"color":"#666666"},"* 每个供应商应该有不同的编码，请你输入",false);
 	}).focus();
-	
 	proName.on("focus",function(){
 		validateTip(proName.next(),{"color":"#666666"},"* 请输入供应商名称",false);
 	}).on("blur",function(){

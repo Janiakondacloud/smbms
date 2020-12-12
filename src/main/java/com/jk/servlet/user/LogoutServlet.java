@@ -16,7 +16,8 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getSession().removeAttribute(Constants.USER_SESSION);//移出session即可
+        /*移出session信息和返回登陆页面*/
+        req.getSession().removeAttribute(Constants.USER_SESSION);
         resp.sendRedirect(req.getContextPath()+"/login.jsp");
     }
 }

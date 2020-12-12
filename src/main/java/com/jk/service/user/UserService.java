@@ -18,6 +18,9 @@ public interface UserService {
     public boolean updatePwd(String userCode,String userPassword);
     public int getUserCount(String userName,int userRole);
     public List<User> getUserList(String userName, int userRole, int currentPageNo, int pageSize);
-
-
+    public boolean addUser(User user);
+    public boolean userExist(String userCode);
+    public boolean deleteUserById(String userId);
+    public boolean modifyUser(User user);
+    public User getUserById(String userId);
 }
