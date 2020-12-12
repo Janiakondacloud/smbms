@@ -1,0 +1,23 @@
+From 9720797549d0aada54284941fb628c7b25c6bb78 Mon Sep 17 00:00:00 2001
+From: jk <1395080062@qq.com>
+Date: Wed, 9 Dec 2020 13:54:03 +0800
+Subject: [PATCH] Revert "Revert "Create README.md""
+
+This reverts commit d905434ce40b26f759225ffc79b466901849cc94.
+---
+ README.md | 3 +++
+ 1 file changed, 3 insertions(+)
+ create mode 100644 README.md
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..6696b5e
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,3 @@
++# smbms-kuangshen
++step-1
++学习项目 JavaWeb-kuangshen
+-- 
+2.26.2.windows.1
+
