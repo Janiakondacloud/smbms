@@ -1,23 +1,19 @@
 package com.jk.filter;
-
 import com.jk.util.Constants;
-import com.sun.deploy.net.HttpResponse;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 
 /**
  * @author Administrator
  * @date 2020/12/6 17 5940
- * @description
+ * @description 权限过滤器 让没有登陆的用户只能访问error.jsp页面
  */
 public class SysFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        System.out.println("SysFilter初始化成功");
     }
 
     @Override
@@ -33,6 +29,6 @@ public class SysFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        System.out.println("SysFilter销毁成功");
     }
 }

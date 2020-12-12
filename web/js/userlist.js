@@ -9,6 +9,7 @@ function deleteUser(obj){
 		dataType:"json",
 		success:function(data){
 			if(data.delResult == "true"){//删除成功：移除删除行
+				alert("删除用户【"+obj.attr("username")+"】成功");
 				cancleBtn();
 				obj.parents("tr").remove();
 			}else if(data.delResult == "false"){//删除失败

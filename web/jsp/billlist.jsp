@@ -9,11 +9,12 @@
        </div>
        <div class="search">
        <form method="get" action="${pageContext.request.contextPath }/jsp/bill.do">
+		   <input type="hidden" name="pageIndex" value="1"/>
 			<input name="method" value="query" class="input-text" type="hidden">
 			<span>商品名称：</span>
 			<input name="queryProductName" type="text" value="${queryProductName }">
 			 
-			<span>供应商：</span>
+			<span>供应商名字：</span>
 			<select name="queryProviderId">
 				<c:if test="${providerList != null }">
 				   <option value="0">--请选择--</option>
@@ -79,6 +80,12 @@
 				</tr>
 			</c:forEach>
       </table>
+	<input type="hidden" id="totalPageCount" value="${totalPageCount}"/>
+	<c:import url="rollpage.jsp">
+		<c:param name="totalCount" value="${totalCount}"/>
+		<c:param name="currentPageNo" value="${currentPageNo}"/>
+		<c:param name="totalPageCount" value="${totalPageCount}"/>
+	</c:import>
   </div>
 </section>
 

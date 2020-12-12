@@ -4,8 +4,8 @@ import com.jk.dao.BaseDao;
 import com.jk.dao.user.UserDao;
 import com.jk.dao.user.UserImpl;
 import com.jk.entity.User;
-import org.junit.jupiter.api.Test;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -36,9 +36,24 @@ public class UserServiceImpl implements UserService{
         boolean flag = false;
         Connection connection = null;
         connection = BaseDao.getConnection();
-        /*通过业务层来调用Dao层的代码*/
-        flag = userDao.updatePwd(connection, userCode,userPassword);
-        BaseDao.close(connection,null,null);
+        try {
+            /*这一步设置事务*/
+            connection.setAutoCommit(false);
+            boolean check = userDao.updatePwd(connection, userCode,userPassword);
+            connection.commit();
+            if(check==true){
+                flag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }finally {
+            BaseDao.close(connection,null,null);
+        }
         return flag;
     }
 
@@ -67,18 +82,112 @@ public class UserServiceImpl implements UserService{
         return userList;
     }
 
-
-
-
-    @Test
-    public void test(){
-       UserServiceImpl service = new UserServiceImpl();
-       //service.updatePwd("admin","123456");
-      // User admin = service.login("admin","123456");
-        int count = service.getUserCount(null, 0);
-        System.out.println("查到了："+count+"行");
-
-        //System.out.println(admin.getUserName());
+    @Override
+    public boolean addUser(User user) {
+        boolean flag = false;
+        Connection connection = null;
+        connection = BaseDao.getConnection();
+        try {
+            connection.setAutoCommit(false);
+            flag = userDao.addUser(connection,user);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }finally {
+            BaseDao.close(connection,null,null);
+        }
+        return flag;
     }
 
+    @Override
+    public boolean userExist(String userCode) {
+        boolean flag = false;
+        Connection connection = null;
+        connection = BaseDao.getConnection();
+        /*通过业务层来调用Dao层的代码*/
+        flag = userDao.userExist(connection,userCode);
+        BaseDao.close(connection,null,null);
+        return flag;
+    }
+
+    @Override
+    public boolean deleteUserById(String userId) {
+        boolean flag = false;
+        Connection connection = null;
+        connection = BaseDao.getConnection();
+        int excute = 0;
+        try {
+            connection.setAutoCommit(false);
+            excute = userDao.deleteUserById(connection,userId);//记得提交事务
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }finally {
+            BaseDao.close(connection,null,null);
+        }
+        if(excute>0){
+            flag = true;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean modifyUser(User user) {
+        boolean flag = false;
+        Connection connection = null;
+        connection = BaseDao.getConnection();
+        int excute = 0;
+        try {
+            connection.setAutoCommit(false);
+            excute = userDao.modifyUser(connection,user);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            BaseDao.close(connection,null,null);
+        }
+        if(excute>0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    @Override
+    public User getUserById(String userId) {
+        Connection connection = null;
+        connection = BaseDao.getConnection();
+        User user = null;
+        try {
+            connection.setAutoCommit(false);
+            user = userDao.getUserById(connection,userId);
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }finally {
+            BaseDao.close(connection,null,null);
+        }
+        return user;
+    }
 }
